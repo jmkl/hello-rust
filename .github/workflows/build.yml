@@ -9,17 +9,9 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Checkout code
+      - name: Build
         uses: actions/checkout@v4
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: Build app
+        uses: dtolnay/rust-toolchain@stable
         run: cargo build
 
       - name: Upload Release Asset
