@@ -26,14 +26,6 @@ jobs:
           path: target/release/hello-rust.exe
       - name: list dir
         run: ls target/release
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: LS BUILD
-        run: ls
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
