@@ -10,9 +10,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      uses: actions/checkout@v4
+      - name: Ass
+        uses: actions/checkout@v4
+      - name: Ass
       uses: dtolnay/rust-toolchain@stable
+      - name: Ass
       run: cargo build
+      - name: Ass
       run: ls
 
   release:
