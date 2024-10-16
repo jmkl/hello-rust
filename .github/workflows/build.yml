@@ -1,0 +1,49 @@
+name: Hello Test Build
+
+on:
+  push:
+    tags:
+      - "v*" # Trigger the workflow on a tag starting with 'v', e.g., v1.0.0
+  workflow_dispatch: # Allow manual triggering of the workflow
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build app
+        run: cargo build
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-rust
+          path: ./target/release/*.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hello-rust
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ./hello-rust/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
