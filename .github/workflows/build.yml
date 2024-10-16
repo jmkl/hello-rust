@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Build
         uses: actions/checkout@v4
+
+      - name: Init Cargo
         uses: dtolnay/rust-toolchain@stable
         run: cargo build
 
