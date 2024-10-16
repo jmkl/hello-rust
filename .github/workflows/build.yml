@@ -2,22 +2,18 @@ name: Hello Test Build
 
 on:
   push:
-    branches:
-      - main # Build only on pushes to main
+    tags:
+      - "v*" # Trigger the workflow on a tag starting with 'v', e.g., v1.0.0
+  workflow_dispatch: # Allow manual triggering of the workflow
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Build
-        uses: actions/checkout@v4
-
-      - name: Init Cargo
-        uses: dtolnay/rust-toolchain@stable
-      - name: Build
-        run: cargo build
-      - name: list dir
-        run: ls
+      uses: actions/checkout@v4
+      uses: dtolnay/rust-toolchain@stable
+      run: cargo build
+      run: ls
 
   release:
     needs: build
@@ -26,6 +22,7 @@ jobs:
     steps:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: target/release/hello-rust.exe
         env:
