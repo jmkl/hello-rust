@@ -29,6 +29,7 @@ jobs:
         with:
           name: hello-rust
           path: ./target/release/*.exe
+      - name: list dir
         run: ls
 
   release:
