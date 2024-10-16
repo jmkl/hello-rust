@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hello-rust
-          path: ./target/release/*.exe
+          path: target/release/hello-rust.exe
       - name: list dir
         run: ls
 
@@ -41,11 +41,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: hello-rust
+      - name: list dir
+        run: ls
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ./hello-rust/*.exe
+          files: target/release/hello-rust.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
