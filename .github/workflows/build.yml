@@ -21,7 +21,7 @@ jobs:
         id: upload-release-asset
         uses: actions/upload-artifact@v4
         with:
-          name: hello-rust.exe
+          name: hello-rust-build
           path: target/release/hello-rust.exe
       - name: list dir
         run: ls
@@ -34,7 +34,7 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: hello-rust.exe
+          name: hello-rust-build
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
