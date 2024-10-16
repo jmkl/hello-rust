@@ -16,7 +16,7 @@ jobs:
       - name: Init Cargo
         uses: dtolnay/rust-toolchain@stable
       - name: Build
-        run: cargo build
+        run: cargo build --release
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -25,7 +25,7 @@ jobs:
           name: hello-rust-build
           path: target/release/hello-rust.exe
       - name: list dir
-        run: ls target
+        run: ls target/release
 
   release:
     needs: build
